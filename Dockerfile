@@ -36,7 +36,7 @@ RUN git clone https://github.com/novnc/noVNC.git /root/noVNC \
         && git clone https://github.com/novnc/websockify /root/noVNC/utils/websockify \
         && rm -rf /root/noVNC/.git \
 	&& rm -rf /root/noVNC/utils/websockify/.git 
-
+COPY . /app
 COPY bash.bashrc /etc/bash.bashrc
 RUN chmod +x /app/conf.d/websockify.sh
 CMD ["/app/entrypoint.sh"]
