@@ -18,7 +18,11 @@ ENV HOME=/root \
     DISPLAY_HEIGHT=768
 
 ENV DEBIAN_FRONTEND noninteractive
-
+RUN set -ex; \
+    apt-get update; \
+    apt-get install -y \
+      bash \
+      socat 
 RUN dpkg --add-architecture i386 \
     && apt update \
     && apt -y install xvfb x11vnc xdotool git supervisor net-tools fluxbox gnupg2 xfce4-terminal tzdata q4wine \
@@ -34,5 +38,5 @@ RUN git clone https://github.com/novnc/noVNC.git /root/noVNC \
 	&& rm -rf /root/noVNC/utils/websockify/.git 
 
 COPY bash.bashrc /etc/bash.bashrc
-EXPOSE 8080
-CMD ["/usr/bin/supervisord"]
+RUN chmod +x /app/conf.d/websockify.sh
+CMD ["/app/entrypoint.sh"]
